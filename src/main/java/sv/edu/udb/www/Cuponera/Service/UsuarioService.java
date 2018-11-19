@@ -32,7 +32,6 @@ public class UsuarioService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			Usuario usuario = repository.findByCorreo(username);
-			System.out.println(usuario.getId());
 			List<GrantedAuthority> lista = new ArrayList<>();
 			lista.add(new SimpleGrantedAuthority(usuario.getTipoUsuario().getDescripcion()));
 			return new User(username, usuario.getPassword(), usuario.isVerificado(), true, true, true, lista);

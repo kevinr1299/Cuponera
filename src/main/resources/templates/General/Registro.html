@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+<title>Registro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/page.css">
+<script th:src="@{/js/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#"> <img
+			th:src="@{/img/folletos.png}" width="30" height="30"
+			class="d-inline-block align-top" alt=""> Cuponera
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+				<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+				<li class="nav-item active"><a class="nav-link"
+					href="/registro">Registrarse</a></li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search"
+					placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+			</form>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-6 col-sm-12">hola</div>
+			<div class="col-xl-6 col-sm-12">
+				<div class="row">
+					<div
+						class="col-sm-12 mt-xl-3 bg-white p-1 rounded border border-primary">
+						<center>
+							<img class="mx-auto" th:src="@{/img/usuario.png}">
+						</center>
+						<h3 class="text-center">Registrar</h3>
+						<form th:action="@{/registro}" method="post"
+							th:object="${cliente}">
+							<p class="text-center">Campos requeridos (*)</p>
+							<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+								<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+							</ul>
+							<div class="row">
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="nombre">Nombre:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">*</div>
+											</div>
+											<input type="text" class="form-control" name="nombre"
+												id="nombre" th:field="*{nombre}" placeholder="Ingresa el nombre">
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="apellido">Apellido:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">*</div>
+											</div>
+											<input type="text" class="form-control" name="apellido"
+												id="apellido" th:field="*{apellido}" placeholder="Ingresa el apellido">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="correo">Correo:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">*</div>
+											</div>
+											<input type="text" class="form-control" name="correo"
+												id="correo" th:field="*{correo}"
+												placeholder="Ingresa el correo">
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="telefono">Telefono:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">*</div>
+											</div>
+											<input type="text" class="form-control" name="telefono"
+												id="telefono" th:field="*{telefono}" placeholder="Ingresa el telefono">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="direccion">Dirección:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">*</div>
+											</div>
+											<input type="text" class="form-control" name="direccion"
+												id="direccion" th:field="*{direccion}" placeholder="Ingresa la dirección">
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="dui">DUI:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">*</div>
+											</div>
+											<input type="text" class="form-control" name="dui" id="dui"
+												th:field="*{dui}" placeholder="Ingresa el DUI">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="clave">Contraseña:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">*</div>
+											</div>
+											<input type="password" class="form-control" name="clave"
+												id="clave" th:field="*{clave}" placeholder="Ingresa la contraseña">
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="confirmacion">Confirmación:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">*</div>
+											</div>
+											<input type="password" class="form-control"
+												name="confirmacion" id="confirmacion"
+												th:field="*{confirmacion}" placeholder="Ingresa la confirmación">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="tarjeta">Tarjeta:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text"></div>
+											</div>
+											<input type="text" class="form-control" name="tarjeta"
+												id="tarjeta" th:field="*{tarjeta}" placeholder="Ingresa la tarjeta">
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-xm-12">
+									<div class="form-group">
+										<label for="pin">PIN:</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text"></div>
+											</div>
+											<input type="password" class="form-control" name="pin" id="pin"
+												th:field="*{pin}" placeholder="Ingresa el PIN">
+										</div>
+									</div>
+								</div>
+							</div>
+							<center>
+								<input type="submit" value="Registrarte"
+									class="btn btn-outline-primary mx-auto">
+							</center>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

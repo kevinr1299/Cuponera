@@ -13,7 +13,10 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">Cuponera</a>
+		<a class="navbar-brand" href="#"> <img
+			th:src="@{/img/folletos.png}" width="30" height="30"
+			class="d-inline-block align-top" alt=""> Cuponera
+		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -27,7 +30,7 @@
 				<li class="nav-item active"><a class="nav-link" href="/login">Login
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Registrarse</a></li>
+				<li class="nav-item"><a class="nav-link" href="/registro">Registrarse</a></li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
 				<input class="form-control mr-sm-2" type="search"
@@ -47,10 +50,15 @@
 								<img class="mx-auto" th:src="@{/img/desprotegido.png}">
 							</center>
 							<h3 class="text-center">Login</h3>
-							<div th:if="${param.error}" class="alert alert-danger">Usuario
-								y/o contraseña incorrecta</div>
-							<div th:if="${param.logout}" class="alert alert-info">Se ha
-								cerrado la sesión</div>
+							<div th:if="${exito != null}" class="alert alert-success">
+								<p th:text="${exito}" class="text-center"></p>
+							</div>
+							<div th:if="${param.error}" class="alert alert-danger">
+								<p class="text-center">Credenciales incorrectas y/o <br/> Usuario sin verificar</p>
+							</div>
+							<div th:if="${param.logout}" class="alert alert-info">
+								<p class="text-center">Se ha cerrado la sesión</p>
+							</div>
 							<form th:action="@{/login}" method="post">
 								<div class="form-group">
 									<label for="username">Correo:</label> <input
