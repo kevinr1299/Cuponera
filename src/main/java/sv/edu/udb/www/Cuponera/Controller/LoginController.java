@@ -64,7 +64,6 @@ public class LoginController {
 	public String ingresarCliente(@Valid @ModelAttribute("cliente") Cliente cliente, BindingResult result, Model model, RedirectAttributes atributos) {
 		try {
 			if(result.hasErrors()) {
-				System.out.println(context.getLocalPort());
 				model.addAttribute("cliente", cliente);
 				return "General/Registro";
 			}else {

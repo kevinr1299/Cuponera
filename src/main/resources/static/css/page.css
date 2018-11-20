@@ -10,3 +10,7 @@ body{
 #pointer{
 	cursor: pointer;
 }
+
+#sidebar{
+	height: 45.35em !important;
+}
