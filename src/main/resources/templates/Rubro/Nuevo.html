@@ -39,7 +39,12 @@
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="/rubro">Clientes</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
-							th:href="@{/logout}">Cerrar sesion</a></li>
+							href="javascript: document.logoutForm.submit()" role="menuitem">Cerrar
+								sesión</a>
+							<form name="logoutForm" th:action="@{/logout}" method="post"
+								th:hidden="true">
+								<input hidden type="submit" value="Sign Out" />
+							</form></li>
 					</ul>
 				</div>
 			</div>
@@ -84,8 +89,8 @@
 									</div>
 									<center>
 										<input type="submit" value="Ingresar"
-											class="btn btn-outline-primary mr-1">
-										<a href="/rubro" class="btn btn-danger">Cancelar</a>
+											class="btn btn-outline-primary mr-1"> <a
+											href="/rubro" class="btn btn-danger">Cancelar</a>
 									</center>
 								</form>
 							</div>

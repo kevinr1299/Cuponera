@@ -39,7 +39,12 @@
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="/rubro">Clientes</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
-							th:href="@{/logout}">Cerrar sesion</a></li>
+							href="javascript: document.logoutForm.submit()" role="menuitem">Cerrar
+								sesión</a>
+							<form name="logoutForm" th:action="@{/logout}" method="post"
+								th:hidden="true">
+								<input hidden type="submit" value="Sign Out" />
+							</form></li>
 					</ul>
 				</div>
 			</div>
@@ -54,31 +59,33 @@
 						</ol>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col-sm-12 p-5">
 						<a class="btn btn-primary" href="/rubro/nuevo">Ingresar rubro</a>
-						<br><br>
+						<br> <br>
 						<table class="table text-center bg-white rounded">
 							<thead class="thead-dark">
 								<tr class="bg-dark">
 									<td class="text-white">Nombre del rubro</td>
 									<td class="text-white">Nº de empresas</td>
 									<td class="text-white">Operaciones</td>
-								</tr>	
+								</tr>
 							</thead>
 							<tbody th:each="rubro :${lista}">
 								<tr>
 									<td th:text="${rubro.descripcion}"></td>
 									<td th:text="${rubro.empresas.size()}"></td>
 									<td>
-										<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+										<button type="button" class="btn btn-primary btn-sm"
+											data-toggle="modal" data-target="#exampleModal">
 											<img th:src="@{/img/magnifier.png}">
-										</button>
-										<a class="btn btn-info btn-sm" th:href="@{/rubro/{id}/actualizar(id=${rubro.id})}">
-											<img th:src="@{/img/update-arrows.png}">
-										</a>
-										<button class="btn btn-danger btn-sm" th:onclick="'eliminar(\'' + ${rubro.id} + '\');'">
+										</button> <a class="btn btn-info btn-sm"
+										th:href="@{/rubro/{id}/actualizar(id=${rubro.id})}"> <img
+											th:src="@{/img/update-arrows.png}">
+									</a>
+										<button class="btn btn-danger btn-sm"
+											th:onclick="'eliminar(\'' + ${rubro.id} + '\');'">
 											<img th:src="@{/img/delete.png}">
 										</button>
 									</td>

@@ -39,7 +39,12 @@
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="/rubro">Clientes</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
-							th:href="@{/logout}">Cerrar sesion</a></li>
+							href="javascript: document.logoutForm.submit()" role="menuitem">Cerrar
+								sesión</a>
+							<form name="logoutForm" th:action="@{/logout}" method="post"
+								th:hidden="true">
+								<input hidden type="submit" value="Sign Out" />
+							</form></li>
 					</ul>
 				</div>
 			</div>
