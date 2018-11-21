@@ -4,7 +4,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="UTF-8">
-<title>Lista de rubros</title>
+<title>Lista de empleados</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/sweetAlert2.min.css}">
@@ -25,19 +25,15 @@
 				<div class="row">
 					<div class="col-sm-12 text-center">
 						<h2 class="text-center">Cuponera</h2>
-						<p class="text-center">Administrador</p>
+						<p class="text-center">Empresa ofertante</p>
 					</div>
 				</div>
 				<div class="row">
 					<ul class="list-group list-group-flush col-sm-12 p-0 m-0">
 						<li class="list-group-item"><a class="nav-link text-dark"
-							href="/oferta/admin">Ofertas</a></li>
-						<li class="list-group-item"><a
-							class="nav-link text-dark" href="/empresa">Empresas</a></li>
-						<li class="list-group-item active"><a class="nav-link text-light"
-							href="/rubro">Rubros</a></li>
-						<li class="list-group-item"><a class="nav-link text-dark"
-							href="/cliente">Clientes</a></li>
+							href="/oferta">Ofertas</a></li>
+						<li class="list-group-item active"><a
+							class="nav-link text-white" href="/empleado">Empleados</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="javascript: document.logoutForm.submit()" role="menuitem">Cerrar
 								sesión</a>
@@ -51,44 +47,50 @@
 			<div class="col-md-10 offset-md-2 col-sm-12">
 				<div class="row">
 					<div class="col-sm-12 bg-dark p-2">
-						<h1 class="text-white">Rubros</h1>
+						<h1 class="text-white">Empleados</h1>
 						<ol class="breadcrumb bg-dark p-0 ">
-							<li class="breadcrumb-item text-white">Administrador</li>
+							<li class="breadcrumb-item text-white">Empresa</li>
 							<li class="breadcrumb-item"><a class="text-white"
-								href="/rubro">Rubros</a></li>
+								href="/empleado">Empleados</a></li>
 						</ol>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-12 p-5">
-						<a class="btn btn-primary" href="/rubro/nuevo">Ingresar rubro</a>
-						<br> <br>
-						<table class="table text-center bg-white rounded">
-							<thead class="thead-dark">
-								<tr class="bg-dark">
-									<td class="text-white">Nombre del rubro</td>
-									<td class="text-white">Nº de empresas</td>
-									<td class="text-white">Operaciones</td>
-								</tr>
-							</thead>
-							<tbody th:each="rubro :${lista}">
-								<tr>
-									<td th:text="${rubro.descripcion}"></td>
-									<td th:text="${rubro.empresas.size()}"></td>
-									<td>
-										<a class="btn btn-info btn-sm"
-										th:href="@{/rubro/{id}/actualizar(id=${rubro.id})}"> <img
-											th:src="@{/img/update-arrows.png}">
-									</a>
-										<button class="btn btn-danger btn-sm"
-											th:onclick="'eliminar(\'' + ${rubro.id} + '\');'">
-											<img th:src="@{/img/delete.png}">
-										</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="row">
+							<a class="btn btn-primary" href="/empleado/nuevo">Ingresar
+								empleado</a><br> <br>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 mt-2">
+								<table class="table bg-white">
+									<thead>
+										<tr class="bg-dark text-white">
+											<td>Nombre</td>
+											<td>Apellido</td>
+											<td>Correo</td>
+											<td>Operaciones</td>
+										</tr>
+									</thead>
+									<tbody th:each="empleado : ${lista}">
+										<tr th:if="${empleado.rol.id != 1}">
+											<td th:text="${empleado.nombre}"></td>
+											<td th:text="${empleado.apellido}"></td>
+											<td th:text="${empleado.usuario.correo}"></td>
+											<td><a class="btn btn-info btn-sm"
+												th:href="@{/empleado/{id}/actualizar(id=${empleado.id})}"> <img
+													th:src="@{/img/update-arrows.png}">
+											</a>
+												<button class="btn btn-danger btn-sm"
+													th:onclick="'eliminar(\'' + ${empleado.id} + '\');'">
+													<img th:src="@{/img/delete.png}">
+												</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -119,7 +121,7 @@
 	function eliminar(id){
 		swal({
 			  title: 'Esta seguro?',
-			  text: "Se eliminar por completo el rubro!",
+			  text: "Se eliminar por completo el empleado!",
 			  type: 'warning',
 			  showCancelButton: true,
 			  confirmButtonColor: '#3085d6',
@@ -128,7 +130,7 @@
 			  cancelButtonText: 'Cancelar'
 			}).then((result) => {
 			  if (result.value) {
-			    location.href="/rubro/" + id + "/eliminar";
+			    location.href="/empleado/" + id + "/eliminar";
 			  }
 			})
 	}

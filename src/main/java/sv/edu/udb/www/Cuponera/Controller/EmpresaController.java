@@ -1,8 +1,5 @@
 package sv.edu.udb.www.Cuponera.Controller;
 
-import java.util.List;
-import java.util.UUID;
-
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import sv.edu.udb.www.Cuponera.Entities.Cliente;
 import sv.edu.udb.www.Cuponera.Entities.Empleado;
 import sv.edu.udb.www.Cuponera.Entities.Empresa;
 import sv.edu.udb.www.Cuponera.Entities.Usuario;

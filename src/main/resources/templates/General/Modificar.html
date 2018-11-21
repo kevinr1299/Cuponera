@@ -27,11 +27,22 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="/index">Inicio</a></li>
-				<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-				<li class="nav-item active"><a class="nav-link"
-					href="/registro">Registrarse</a></li>
+			<ul class="navbar-nav mr-auto" th:if="${cliente != null}">
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" th:text="${cliente.nombre}"> </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" th:href="@{/cliente/actualizar}">Actualizar datos</a> <a
+							class="dropdown-item" th:href="@{/cliente/clave}">Cambiar contraseña</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item"
+							href="javascript: document.logoutForm.submit()">Cerrar sesion</a>
+					</div>
+					<form name="logoutForm" th:action="@{/logout}" method="post"
+						th:hidden="true">
+						<input hidden type="submit" value="Sign Out" />
+					</form></li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
 				<input class="form-control mr-sm-2" type="search"
@@ -42,18 +53,18 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<div class="col-xl-6 col-sm-12"></div>
-			<div class="col-xl-6 col-sm-12">
+			<div class="col-xl-6 offset-xl-3 col-sm-12">
 				<div class="row">
 					<div
 						class="col-sm-12 mt-xl-3 bg-white p-1 rounded border border-primary">
 						<center>
 							<img class="mx-auto" th:src="@{/img/usuario.png}">
 						</center>
-						<h3 class="text-center">Registrar</h3>
-						<form th:action="@{/registro}" method="post"
+						<h3 class="text-center">Modificar datos</h3>
+						<form th:action="@{/cliente/actualizar}" method="post"
 							th:object="${cliente}">
 							<p class="text-center">Campos requeridos (*)</p>
+							<p class="text-center text-primary">Al momento de actualizar sus datos se cerrara sesion para actualizar la informacion en sesion</p>
 							<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
 								<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
 							</ul>
@@ -92,7 +103,7 @@
 												<div class="input-group-text">*</div>
 											</div>
 											<input type="text" class="form-control" name="correo"
-												id="correo" th:field="*{correo}"
+												id="correo" readonly th:value="*{correo}"
 												placeholder="Ingresa el correo">
 										</div>
 									</div>
@@ -130,35 +141,8 @@
 											<div class="input-group-prepend">
 												<div class="input-group-text">*</div>
 											</div>
-											<input type="text" class="form-control" name="dui" id="dui"
-												th:field="*{dui}" placeholder="Ingresa el DUI">
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xl-6 col-sm-12">
-									<div class="form-group">
-										<label for="clave">Contraseña:</label>
-										<div class="input-group mb-2">
-											<div class="input-group-prepend">
-												<div class="input-group-text">*</div>
-											</div>
-											<input type="password" class="form-control" name="clave"
-												id="clave" th:field="*{clave}" placeholder="Ingresa la contraseña">
-										</div>
-									</div>
-								</div>
-								<div class="col-xl-6 col-sm-12">
-									<div class="form-group">
-										<label for="confirmacion">Confirmación:</label>
-										<div class="input-group mb-2">
-											<div class="input-group-prepend">
-												<div class="input-group-text">*</div>
-											</div>
-											<input type="password" class="form-control"
-												name="confirmacion" id="confirmacion"
-												th:field="*{confirmacion}" placeholder="Ingresa la confirmación">
+											<input type="text" readonly class="form-control" name="dui" id="dui"
+												th:value="*{dui}" placeholder="Ingresa el DUI">
 										</div>
 									</div>
 								</div>
@@ -169,10 +153,10 @@
 										<label for="tarjeta">Tarjeta:</label>
 										<div class="input-group mb-2">
 											<div class="input-group-prepend">
-												<div class="input-group-text"></div>
+												<div class="input-group-text">*</div>
 											</div>
 											<input type="text" class="form-control" name="tarjeta"
-												id="tarjeta" th:field="*{tarjeta}" placeholder="Ingresa la tarjeta">
+												id="tarjeta" th:field="*{clave}" placeholder="Ingresa la tarjeta">
 										</div>
 									</div>
 								</div>
@@ -181,17 +165,21 @@
 										<label for="pin">PIN:</label>
 										<div class="input-group mb-2">
 											<div class="input-group-prepend">
-												<div class="input-group-text"></div>
+												<div class="input-group-text">*</div>
 											</div>
 											<input type="password" class="form-control" name="pin" id="pin"
-												th:field="*{pin}" placeholder="Ingresa el PIN">
+												th:field="*{confirmacion}" placeholder="Ingresa el PIN">
 										</div>
 									</div>
 								</div>
 							</div>
+							<input type="hidden" th:field="*{id}">
+							<input type="hidden" th:field="*{tarjeta}">
+							<input type="hidden" th:field="*{pin}">
 							<center>
-								<input type="submit" value="Registrarte"
+								<input type="submit" value="Actualizar"
 									class="btn btn-outline-primary mx-auto">
+								<a href="/index" class="btn btn-danger">Cancelar</a>
 							</center>
 						</form>
 					</div>

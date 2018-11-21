@@ -15,7 +15,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#"> <img
+		<a class="navbar-brand" href="/index"> <img
 			th:src="@{/img/folletos.png}" width="30" height="30"
 			class="d-inline-block align-top" alt=""> Cuponera
 		</a>
@@ -28,7 +28,7 @@
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+				<li class="nav-item"><a class="nav-link" href="/index">Inicio</a></li>
 				<li class="nav-item active"><a class="nav-link" href="/login">Login
 						<span class="sr-only">(current)</span>
 				</a></li>
@@ -53,13 +53,13 @@
 							</center>
 							<h3 class="text-center">Login</h3>
 							<div th:if="${exito != null}" class="alert alert-success">
-								<p th:text="${exito}" class="text-center"></p>
+								<strong th:text="${exito}" class="text-center"></strong>
 							</div>
 							<div th:if="${param.error}" class="alert alert-danger">
-								<p class="text-center">Credenciales incorrectas y/o <br/> Usuario sin verificar</p>
+								<strong class="text-center">Credenciales incorrectas y/o <br/> Usuario sin verificar</strong>
 							</div>
 							<div th:if="${param.logout}" class="alert alert-info">
-								<p class="text-center">Se ha cerrado la sesión</p>
+								<strong class="text-center">Se ha cerrado la sesión</strong>
 							</div>
 							<form th:action="@{/login}" method="post">
 								<div class="form-group">

@@ -1,5 +1,6 @@
 package sv.edu.udb.www.Cuponera.Controller;
 
+import java.util.Date;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -9,6 +10,8 @@ import javax.validation.Valid;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sv.edu.udb.www.Cuponera.Entities.Cliente;
 import sv.edu.udb.www.Cuponera.Entities.Usuario;
 import sv.edu.udb.www.Cuponera.Repository.ClienteRepository;
+import sv.edu.udb.www.Cuponera.Repository.PromocionRepository;
 import sv.edu.udb.www.Cuponera.Repository.TipoRepository;
 import sv.edu.udb.www.Cuponera.Repository.UsuarioRepository;
 import sv.edu.udb.www.Cuponera.Service.EmailService;
@@ -41,6 +45,10 @@ public class LoginController {
 	@Autowired
 	@Qualifier("UsuarioRepository")
 	UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	@Qualifier("PromocionRepository")
+	PromocionRepository promocionRepository;
 	
 	@Autowired
 	@Qualifier("TipoRepository")
@@ -63,10 +71,10 @@ public class LoginController {
 	@PostMapping("/registro")
 	public String ingresarCliente(@Valid @ModelAttribute("cliente") Cliente cliente, BindingResult result, Model model, RedirectAttributes atributos) {
 		try {
-			if(!cliente.getCorreo().matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$")){
+			if(!cliente.getCorreo().matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")){
 				result.addError(new ObjectError("correo","Formato de correo incorrecto"));
 			}
-			if(!cliente.getClave().matches("^(?=\\\\w*\\\\d)(?=\\\\w*[A-Z])(?=\\\\w*[a-z])\\\\S{8,16}$")) {
+			if(!cliente.getClave().matches("^(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S{8,16}$")) {
 				result.addError(new ObjectError("clave","La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula"));
 			}
 			if(cliente.getConfirmacion().isEmpty()) {
@@ -145,6 +153,13 @@ public class LoginController {
 		return "redirect:/login";
 	}
 	
+	@GetMapping("/index")
+	public String index(Model model) {
+		model.addAttribute("lista", promocionRepository.listaActivos(new Date()));
+		model.addAttribute("cliente", obtenerCliente());
+		return "General/index";
+	}
+	
 	private Usuario crearUsuario(String correo, String clave) {
 		Usuario user = new Usuario();
 		user.setCorreo(correo);
@@ -154,5 +169,24 @@ public class LoginController {
 		user.setToken(UUID.randomUUID().toString());
 		user.setInicio(true);
 		return user;
+	}
+	
+	private Cliente obtenerCliente() {
+		try {
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			UserDetails userDetails = null;
+			if (principal instanceof UserDetails) {
+				userDetails = (UserDetails) principal;
+			}
+			Usuario user = usuarioRepository.findByCorreo(userDetails.getUsername());
+			Cliente cliente = new Cliente();
+			for(Cliente c : user.getClientes()) {
+				cliente = c;
+				break;
+			}
+			return cliente;
+		}catch(Exception ex) {
+			return null;
+		}
 	}
 }

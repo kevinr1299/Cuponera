@@ -46,9 +46,9 @@ public class Cliente  implements java.io.Serializable {
      private String dui;
      private String tarjeta;
      private String pin;
-     private transient String correo;
-     private transient String clave;
-     private transient String confirmacion;
+     private String correo;
+     private String clave;
+     private String confirmacion;
      private Set<Cupon> cupons = new HashSet<Cupon>(0);
 
     public Cliente() {

@@ -1,10 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Index</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/sweetAlert2.min.css}">
+<link rel="stylesheet" th:href="@{/css/page.css}">
+<script th:src="@{/js/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/sweetAlert2.min.js}" type="text/javascript"></script>
 </head>
 <body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="/index"> <img
+			th:src="@{/img/folletos.png}" width="30" height="30"
+			class="d-inline-block align-top" alt=""> Cuponera
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto" th:if="${cliente == null}">
+				<li class="nav-item active"><a class="nav-link" href="/index">Inicio</a></li>
+				<li class="nav-item"><a class="nav-link" href="/login">Login
+						<span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="/registro">Registrarse</a></li>
+			</ul>
+			<ul class="navbar-nav mr-auto" th:if="${cliente != null}">
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" th:text="${cliente.nombre}"> </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" th:href="@{/cliente/actualizar}">Actualizar datos</a> <a
+							class="dropdown-item" th:href="@{/cliente/clave}">Cambiar contraseña</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item"
+							href="javascript: document.logoutForm.submit()">Cerrar sesion</a>
+					</div>
+					<form name="logoutForm" th:action="@{/logout}" method="post"
+						th:hidden="true">
+						<input hidden type="submit" value="Sign Out" />
+					</form></li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search"
+					placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+			</form>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row">
+					<div th:each="promocion : ${lista}">
+						<div class="card m-2" style="width: 15rem;"
+							th:if="${promocion.estadoOferta.id == 1}">
+							<img class="card-img-top"
+								th:src="@{/uploads/{img}(img=${promocion.img})}"
+								alt="Imagen de la promocion">
+							<div class="card-body">
+								<h5 class="card-title">
+									<span th:text="${promocion.titulo}"></span> <span
+										class="badge badge-secondary"
+										th:if="${promocion.cuponesDisponibles < 0}">Ilimitados</span><span
+										class="badge badge-secondary"
+										th:if="${promocion.cuponesDisponibles >= 0}"
+										th:text="${promocion.cuponesDisponibles}"></span>
+								</h5>
+								<p class="text-center">
+									$<span style="text-decoration: line-through;"
+										th:text="${promocion.precioRegular}"></span>|$<span
+										class="text-success" th:text="${promocion.precioOferta}"></</span>
+								</p>
+								<a href="#" th:if="${cliente != null}"
+									class="btn btn-danger btn-block">Comprar <img
+									th:src="@{/img/voucher.png}"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="fixed-bottom">
+			<div th:if="${exito != null}"
+				class="alert alert-success col-md-4 float-right alert-dismissible fade show"
+				role="alert">
+				<strong th:text="${exito}"></strong>
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div th:if="${fallo != null}"
+				class="alert alert-danger col-md-4 float-right alert-dismissible fade show"
+				role="alert">
+				<strong th:text="${fallo}"></strong>
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

@@ -3,9 +3,7 @@ package sv.edu.udb.www.Cuponera.Controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -55,7 +53,7 @@ public class PromocionController {
 	@PreAuthorize("hasAuthority('Empresa')")
 	@GetMapping()
 	public String listaPromociones(Model model) {
-		Empresa empresa = obtenerEmpresa();// Cambiar por obtenerEmpresa()
+		Empresa empresa = obtenerEmpresa();
 		model.addAttribute("lista", promocionRepository.findByEmpresa(empresa));
 		return "Promocion/Lista";
 	}

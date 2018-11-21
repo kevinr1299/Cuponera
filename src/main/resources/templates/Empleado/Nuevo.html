@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+<title>Lista de promociones</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/sweetAlert2.min.css}">
+<link rel="stylesheet" th:href="@{/css/page.css}">
+<script th:src="@{/js/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/sweetAlert2.min.js}" type="text/javascript"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div id="sidebar" class="col-md-2 col-sm-12 position-fixed bg-white">
+				<div class="row">
+					<div class="col-sm-12 text-center pt-2">
+						<img th:src="@{/img/flyers.png}">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 text-center">
+						<h2 class="text-center">Cuponera</h2>
+						<p class="text-center">Empresa ofertante</p>
+					</div>
+				</div>
+				<div class="row">
+					<ul class="list-group list-group-flush col-sm-12 p-0 m-0">
+						<li class="list-group-item"><a
+							class="nav-link text-dark" href="/oferta">Ofertas</a></li>
+						<li class="list-group-item active"><a class="nav-link text-light"
+							href="/empleado">Empleados</a></li>
+						<li class="list-group-item"><a class="nav-link text-dark"
+							href="javascript: document.logoutForm.submit()" role="menuitem">Cerrar
+								sesión</a>
+							<form name="logoutForm" th:action="@{/logout}" method="post"
+								th:hidden="true">
+								<input hidden type="submit" value="Sign Out" />
+							</form></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-10 offset-md-2 col-sm-12">
+				<div class="row">
+					<div class="col-sm-12 bg-dark p-2">
+						<h1 class="text-white">Empleados</h1>
+						<ol class="breadcrumb bg-dark p-0 ">
+							<li class="breadcrumb-item text-white">Empresa</li>
+							<li class="breadcrumb-item"><a class="text-white"
+								href="/empleado">Empleados</a></li>
+							<li class="breadcrumb-item"><a class="text-white"
+								href="/empleado/nuevo">Nuevo</a></li>
+						</ol>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12 p-5">
+						<div class="row">
+							<div class="col-sm-12 col-md-4 offset-md-4 bg-light rounded p-2">
+								<h3 class="text-center">Nuevo empleado</h3>
+								<form th:action="@{/empleado/nuevo}" method="post"
+									th:object="${empleado}">
+									<p class="text-center">Campos requeridos (*)</p>
+									<ul th:if="${#fields.hasErrors('*')}"
+										class="alert alert-danger">
+										<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+									</ul>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label for="nombre">Nombre:</label>
+											<div class="input-group mb-2">
+												<div class="input-group-prepend">
+													<div class="input-group-text">*</div>
+												</div>
+												<input type="text" class="form-control" name="nombre"
+													id="nombre" th:field="*{nombre}"
+													placeholder="Ingresa el nombre">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="apellido">Apellido:</label>
+											<div class="input-group mb-2">
+												<div class="input-group-prepend">
+													<div class="input-group-text">*</div>
+												</div>
+												<input type="text" class="form-control" name="apellido"
+													id="apellido" th:field="*{apellido}"
+													placeholder="Ingresa el apellido">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="correo">Correo:</label>
+											<div class="input-group mb-2">
+												<div class="input-group-prepend">
+													<div class="input-group-text">*</div>
+												</div>
+												<input type="text" class="form-control" name="correo"
+													id="correo" th:field="*{correo}"
+													placeholder="Ingresa el correo">
+											</div>
+										</div>
+										<center>
+											<input type="submit" value="Ingresar"
+												class="btn btn-outline-primary mr-1"> <a
+												href="/empleado" class="btn btn-danger">Cancelar</a>
+										</center>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
