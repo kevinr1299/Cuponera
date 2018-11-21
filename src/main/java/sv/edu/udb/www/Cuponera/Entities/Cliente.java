@@ -46,13 +46,8 @@ public class Cliente  implements java.io.Serializable {
      private String dui;
      private String tarjeta;
      private String pin;
-     @Pattern(regexp="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", message="Formato de correo incorrecto")
-     @NotBlank(message="El correo es obligatorio")
      private transient String correo;
-     @Pattern(regexp="^(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S{8,16}$", message="La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula")
-     @NotBlank(message="La contraseña es obligatoria")
      private transient String clave;
-     @NotBlank(message="La confirmación es obligatoria")
      private transient String confirmacion;
      private Set<Cupon> cupons = new HashSet<Cupon>(0);
 

@@ -80,7 +80,7 @@ public class RubroController {
 		try {
 			if(result.hasErrors()) {
 				model.addAttribute("rubro", rubro);
-				return "Rubro/Nuevo";
+				return "Rubro/Modificar";
 			}else {
 				rubroRepository.save(rubro);
 				atributos.addFlashAttribute("exito", "Rubro actualizado");
@@ -88,7 +88,7 @@ public class RubroController {
 			}
 		}catch(Exception ex) {
 			model.addAttribute("rubro", rubro);
-			return "Rubro/Nuevo";
+			return "Rubro/Modificar";
 		}
 	}
 }

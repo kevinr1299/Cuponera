@@ -4,7 +4,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="UTF-8">
-<title>Lista de rubros</title>
+<title>Lista de empresas</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/sweetAlert2.min.css}">
@@ -32,9 +32,9 @@
 					<ul class="list-group list-group-flush col-sm-12 p-0 m-0">
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="/oferta/admin">Ofertas</a></li>
-						<li class="list-group-item"><a
-							class="nav-link text-dark" href="/empresa">Empresas</a></li>
-						<li class="list-group-item active"><a class="nav-link text-light"
+						<li class="list-group-item active"><a
+							class="nav-link text-light" href="/empresa">Empresas</a></li>
+						<li class="list-group-item"><a class="nav-link text-dark"
 							href="/rubro">Rubros</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="/cliente">Clientes</a></li>
@@ -51,44 +51,45 @@
 			<div class="col-md-10 offset-md-2 col-sm-12">
 				<div class="row">
 					<div class="col-sm-12 bg-dark p-2">
-						<h1 class="text-white">Rubros</h1>
+						<h1 class="text-white">Empresas</h1>
 						<ol class="breadcrumb bg-dark p-0 ">
 							<li class="breadcrumb-item text-white">Administrador</li>
 							<li class="breadcrumb-item"><a class="text-white"
-								href="/rubro">Rubros</a></li>
+								href="/empresa">Empresas</a></li>
 						</ol>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-12 p-5">
-						<a class="btn btn-primary" href="/rubro/nuevo">Ingresar rubro</a>
-						<br> <br>
+						<a class="btn btn-primary" href="/empresa/nuevo">Ingresar
+							empresas</a> <br> <br>
 						<table class="table text-center bg-white rounded">
 							<thead class="thead-dark">
 								<tr class="bg-dark">
-									<td class="text-white">Nombre del rubro</td>
-									<td class="text-white">Nº de empresas</td>
+									<td class="text-white">Identificador</td>
+									<td class="text-white">Nombre</td>
+									<td class="text-white">Nombre del contacto</td>
+									<td class="text-white">Telefono</td>
+									<td class="text-white">Comisión (%)</td>
 									<td class="text-white">Operaciones</td>
 								</tr>
 							</thead>
-							<tbody th:each="rubro :${lista}">
+							<tbody th:each="empresa :${lista}">
 								<tr>
-									<td th:text="${rubro.descripcion}"></td>
-									<td th:text="${rubro.empresas.size()}"></td>
-									<td>
-										<button type="button" class="btn btn-primary btn-sm"
-											data-toggle="modal" data-target="#exampleModal">
-											<img th:src="@{/img/magnifier.png}">
-										</button> <a class="btn btn-info btn-sm"
-										th:href="@{/rubro/{id}/actualizar(id=${rubro.id})}"> <img
+									<td th:text="${empresa.identificador}"></td>
+									<td th:text="${empresa.nombre}"></td>
+									<td th:text="${empresa.nombreContacto}"></td>
+									<td th:text="${empresa.telefono}"></td>
+									<td th:text="${empresa.comision}"></td>
+									<td><a class="btn btn-info btn-sm"
+										th:href="@{/empresa/{id}/actualizar(id=${empresa.id})}"> <img
 											th:src="@{/img/update-arrows.png}">
 									</a>
 										<button class="btn btn-danger btn-sm"
-											th:onclick="'eliminar(\'' + ${rubro.id} + '\');'">
+											th:onclick="'eliminar(\'' + ${empresa.id} + '\');'">
 											<img th:src="@{/img/delete.png}">
-										</button>
-									</td>
+										</button></td>
 								</tr>
 							</tbody>
 						</table>
@@ -122,7 +123,7 @@
 	function eliminar(id){
 		swal({
 			  title: 'Esta seguro?',
-			  text: "Se eliminar por completo el rubro!",
+			  text: "Se eliminar por completo la empresa!",
 			  type: 'warning',
 			  showCancelButton: true,
 			  confirmButtonColor: '#3085d6',
@@ -131,7 +132,7 @@
 			  cancelButtonText: 'Cancelar'
 			}).then((result) => {
 			  if (result.value) {
-			    location.href="/rubro/" + id + "/eliminar";
+			    location.href="/empresa/" + id + "/eliminar";
 			  }
 			})
 	}

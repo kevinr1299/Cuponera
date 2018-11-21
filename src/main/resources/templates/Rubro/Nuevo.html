@@ -4,7 +4,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="UTF-8">
-<title>Lista de rubros</title>
+<title>Rubro nuevo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/sweetAlert2.min.css}">
@@ -31,13 +31,13 @@
 				<div class="row">
 					<ul class="list-group list-group-flush col-sm-12 p-0 m-0">
 						<li class="list-group-item"><a class="nav-link text-dark"
-							href="/rubro">Ofertas</a></li>
+							href="/oferta/admin">Ofertas</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
-							href="/rubro">Empresas</a></li>
+							href="/empresa">Empresas</a></li>
 						<li class="list-group-item active"><a
 							class="nav-link text-light" href="/rubro">Rubros</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
-							href="/rubro">Clientes</a></li>
+							href="/cliente">Clientes</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="javascript: document.logoutForm.submit()" role="menuitem">Cerrar
 								sesión</a>
@@ -86,12 +86,11 @@
 													placeholder="Ingresa el nombre">
 											</div>
 										</div>
-									</div>
-									<center>
-										<input type="submit" value="Ingresar"
-											class="btn btn-outline-primary mr-1"> <a
-											href="/rubro" class="btn btn-danger">Cancelar</a>
-									</center>
+										<center>
+											<input type="submit" value="Ingresar"
+												class="btn btn-outline-primary mr-1"> <a
+												href="/rubro" class="btn btn-danger">Cancelar</a>
+										</center>
 								</form>
 							</div>
 						</div>

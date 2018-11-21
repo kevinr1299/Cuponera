@@ -63,6 +63,15 @@ public class LoginController {
 	@PostMapping("/registro")
 	public String ingresarCliente(@Valid @ModelAttribute("cliente") Cliente cliente, BindingResult result, Model model, RedirectAttributes atributos) {
 		try {
+			if(!cliente.getCorreo().matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*$")){
+				result.addError(new ObjectError("correo","Formato de correo incorrecto"));
+			}
+			if(!cliente.getClave().matches("^(?=\\\\w*\\\\d)(?=\\\\w*[A-Z])(?=\\\\w*[a-z])\\\\S{8,16}$")) {
+				result.addError(new ObjectError("clave","La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula"));
+			}
+			if(cliente.getConfirmacion().isEmpty()) {
+				result.addError(new ObjectError("confirmacion","La confirmacion es obligatoria"));
+			}
 			if(result.hasErrors()) {
 				model.addAttribute("cliente", cliente);
 				return "General/Registro";
@@ -113,10 +122,12 @@ public class LoginController {
 			}
 		}catch(MessagingException ex) {
 			result.addError(new ObjectError("correo","Ocurrio un problema enviando el correo, contactenos por medio de correo o telefono para brindarle una solucion"));
+			model.addAttribute("cliente", cliente);
 			return "General/Registro";
 		}
 		catch(Exception ex) {
 			result.addError(new ObjectError("correo","El correo ingresado ya esta ocupado"));
+			model.addAttribute("cliente", cliente);
 			return "General/Registro";
 		}
 	}

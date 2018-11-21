@@ -31,13 +31,13 @@
 				<div class="row">
 					<ul class="list-group list-group-flush col-sm-12 p-0 m-0">
 						<li class="list-group-item"><a class="nav-link text-dark"
-							href="/rubro">Ofertas</a></li>
+							href="/oferta/admin">Ofertas</a></li>
+						<li class="list-group-item"><a
+							class="nav-link text-dark" href="/empresa">Empresas</a></li>
+						<li class="list-group-item active"><a class="nav-link text-light"
+							href="/rubro">Rubros</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
-							href="/rubro">Empresas</a></li>
-						<li class="list-group-item active"><a
-							class="nav-link text-light" href="/rubro">Rubros</a></li>
-						<li class="list-group-item"><a class="nav-link text-dark"
-							href="/rubro">Clientes</a></li>
+							href="/cliente">Clientes</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="javascript: document.logoutForm.submit()" role="menuitem">Cerrar
 								sesión</a>
@@ -57,7 +57,7 @@
 							<li class="breadcrumb-item"><a class="text-white"
 								href="/rubro">Rubros</a></li>
 							<li class="breadcrumb-item"><a class="text-white"
-								href="/rubro/nuevo">Nuevo</a></li>
+								th:href="@{/rubro/{id}/actualizar(id=${rubro.id})}">Modificar</a></li>
 						</ol>
 					</div>
 				</div>
