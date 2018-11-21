@@ -40,8 +40,9 @@
 					role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false" th:text="${cliente.nombre}"> </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" th:href="@{/cliente/actualizar}">Actualizar datos</a> <a
-							class="dropdown-item" th:href="@{/cliente/clave}">Cambiar contraseña</a>
+						<a class="dropdown-item" th:href="@{/cliente/actualizar}">Actualizar
+							datos</a> <a class="dropdown-item" th:href="@{/cliente/clave}">Cambiar
+							contraseña</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item"
 							href="javascript: document.logoutForm.submit()">Cerrar sesion</a>
@@ -78,20 +79,21 @@
 										th:text="${promocion.cuponesDisponibles}"></span>
 								</h5>
 								<p class="text-center">
+									<span>Empresa: </span><strong th:text="${promocion.empresa.nombre}"></strong><br>
 									$<span style="text-decoration: line-through;"
 										th:text="${promocion.precioRegular}"></span>|$<span
 										class="text-success" th:text="${promocion.precioOferta}"></</span>
 								</p>
-								<a href="#" th:if="${cliente != null}"
-									class="btn btn-danger btn-block">Comprar <img
-									th:src="@{/img/voucher.png}"></a>
+								<button th:if="${cliente != null}"
+									class="btn btn-danger btn-block"
+									th:onclick="'comprar(\'' + ${promocion.id} + '\');'">Comprar <img
+									th:src="@{/img/voucher.png}"></button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
 		<div class="fixed-bottom">
 			<div th:if="${exito != null}"
 				class="alert alert-success col-md-4 float-right alert-dismissible fade show"
@@ -114,4 +116,22 @@
 		</div>
 	</div>
 </body>
+<script>
+	async function comprar(id){
+		const {value: password} = await swal({
+			  title: 'Ingresa tu pin:',
+			  input: 'password',
+			  inputPlaceholder: '•••••••••',
+			  inputAttributes: {
+			    maxlength: 10,
+			    autocapitalize: 'off',
+			    autocorrect: 'off'
+			  }
+			})
+
+			if (password) {
+			  location.href = "/cupon/"+ password+"/"+id+"/comprar";
+			}
+	}
+</script>
 </html>

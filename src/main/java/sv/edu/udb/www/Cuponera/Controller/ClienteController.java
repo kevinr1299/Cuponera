@@ -7,6 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import sv.edu.udb.www.Cuponera.Repository.UsuarioRepository;
 import sv.edu.udb.www.Cuponera.Utils.CambioClave;
 
 @Controller()
+@PreAuthorize("hasAuthority('Cliente')")
 @RequestMapping("/cliente")
 public class ClienteController {
 	
@@ -179,17 +181,4 @@ public class ClienteController {
 		}
 	}
 	
-	private Usuario obtenerUsuario() {
-		try {
-			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			UserDetails userDetails = null;
-			if (principal instanceof UserDetails) {
-				userDetails = (UserDetails) principal;
-			}
-			Usuario user = usuarioRepository.findByCorreo(userDetails.getUsername());
-			return user;
-		}catch(Exception ex) {
-			return null;
-		}
-	}
 }
