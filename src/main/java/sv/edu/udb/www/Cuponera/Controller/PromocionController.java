@@ -130,6 +130,7 @@ public class PromocionController {
 				return "redirect:/oferta";
 			}
 		} catch (Exception ex) {
+			System.out.println(ex);
 			result.addError(new ObjectError("titulo", "No se pudo guardar la oferta"));
 			model.addAttribute("oferta", promocion);
 			return "Promocion/Nuevo";

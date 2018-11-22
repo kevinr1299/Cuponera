@@ -28,7 +28,6 @@ import sv.edu.udb.www.Cuponera.Repository.UsuarioRepository;
 import sv.edu.udb.www.Cuponera.Utils.CambioClave;
 
 @Controller()
-@PreAuthorize("hasAuthority('Cliente')")
 @RequestMapping("/cliente")
 public class ClienteController {
 	
@@ -40,6 +39,14 @@ public class ClienteController {
 	@Qualifier("ClienteRepository")
 	ClienteRepository clienteRepository;
 	
+	@PreAuthorize("hasAuthority('Administrador')")
+	@GetMapping()
+	public String listaCliente(Model model) {
+		model.addAttribute("lista", clienteRepository.findAll());
+		return "Cliente/Lista";
+	}
+	
+	@PreAuthorize("hasAuthority('Cliente')")
 	@GetMapping("/actualizar")
 	public String obtenerCliente(Model model) {
 		Cliente cliente = obtenerCliente();
@@ -50,6 +57,7 @@ public class ClienteController {
 		return "General/Modificar";
 	}
 	
+	@PreAuthorize("hasAuthority('Cliente')")
 	@GetMapping("/clave")
 	public String formCambio(Model model) {
 		Cliente cliente = obtenerCliente();
@@ -61,6 +69,7 @@ public class ClienteController {
 		return "General/clave";
 	}
 	
+	@PreAuthorize("hasAuthority('Cliente')")
 	@PostMapping("/actualizar")
 	public String actualizarCliente(HttpServletRequest request, @Valid @ModelAttribute("cliente") Cliente cliente, BindingResult result, Model model, RedirectAttributes atributos) {
 		try {
@@ -129,6 +138,7 @@ public class ClienteController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('Cliente')")
 	@PostMapping("/clave")
 	public String cambiarClave(HttpServletRequest request, @ModelAttribute("cambio") CambioClave cambio, BindingResult result, Model model, RedirectAttributes atributos) {
 		try {
@@ -159,6 +169,17 @@ public class ClienteController {
 			atributos.addFlashAttribute("error","No se pudo actualizar");
 			return "redirect:/cliente/clave";
 		}
+	}
+	
+	@PreAuthorize("hasAuthority('Cliente')")
+	@GetMapping("/cupones")
+	public String obtenerCupones(Model model) {
+		Cliente cliente = obtenerCliente();
+		if(cliente == null) {
+			return "/login";
+		}
+		model.addAttribute("cliente", cliente);
+		return "Cupon/Lista";
 	}
 	
 	private Cliente obtenerCliente() {

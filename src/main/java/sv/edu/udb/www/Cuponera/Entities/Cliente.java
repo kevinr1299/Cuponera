@@ -49,6 +49,9 @@ public class Cliente  implements java.io.Serializable {
      private String correo;
      private String clave;
      private String confirmacion;
+     private int canjeados;
+     private int sinCanjear;
+     private int vencidos;
      private Set<Cupon> cupons = new HashSet<Cupon>(0);
 
     public Cliente() {
@@ -212,7 +215,57 @@ public class Cliente  implements java.io.Serializable {
 	}
 
 
+	@Transient
+    public int getCanjeados() {
+		canjeados = 0;
+		for(Cupon c : this.cupons) {
+			if(c.getEstadoCupon().getId() == 2) {
+				canjeados++;
+			}
+		}
+		return canjeados;
+	}
 
+
+	public void setCanjeados(int canjeados) {
+		this.canjeados = canjeados;
+	}
+
+
+	@Transient
+    public int getSinCanjear() {
+		sinCanjear = 0;
+		for(Cupon c : this.cupons) {
+			if(c.getEstadoCupon().getId() == 1) {
+				sinCanjear++;
+			}
+		}
+		return sinCanjear;
+	}
+
+
+	public void setSinCanjear(int sinCanjear) {
+		this.sinCanjear = sinCanjear;
+	}
+
+
+	@Transient
+    public int getVencidos() {
+		vencidos = 0;
+		for(Cupon c : this.cupons) {
+			if(c.getEstadoCupon().getId() == 1) {
+				vencidos++;
+			}
+		}
+		return vencidos;
+	}
+
+
+	public void setVencidos(int vencidos) {
+		this.vencidos = vencidos;
+	}
+	
+	
 
 }
 

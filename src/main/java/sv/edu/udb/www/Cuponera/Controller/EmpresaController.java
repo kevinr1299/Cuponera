@@ -94,7 +94,7 @@ public class EmpresaController {
 				model.addAttribute("rubros", rubroRepository.findAll());
 				return "Empresa/Nuevo";
 			}else {
-				String clave = PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS + PasswordGenerator.MAYUSCULAS + PasswordGenerator.ESPECIALES, 10);
+				String clave = PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS + PasswordGenerator.MAYUSCULAS, 10);
 				Usuario user = crearUsuario(empresa.getCorreo(), clave);
 				int empresaId = empresaRepository.getCount();
 				String codigo = "";
@@ -104,6 +104,17 @@ public class EmpresaController {
 					codigo = "EMP0" + empresaId;
 				}else if(empresaId > 100) {
 					codigo = "EMP" + empresaId;
+				}
+				Empresa e = empresaRepository.findByIdentificador(codigo);
+				if(e != null) {
+					int max = empresaRepository.getMaxId();
+					if(max < 10) {
+						codigo = "EMP00" + max;
+					}else if(max < 100) {
+						codigo = "EMP0" + max;
+					}else if(max > 100) {
+						codigo = "EMP" + max;
+					}
 				}
 				empresa.setIdentificador(codigo);
 				if(empresaRepository.save(empresa) != null) {

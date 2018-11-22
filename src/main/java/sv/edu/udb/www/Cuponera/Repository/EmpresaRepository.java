@@ -13,5 +13,6 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
 	int getMaxId();
 	@Query("SELECT COUNT(e.id) FROM Empresa e")
 	int getCount();
+	public abstract Empresa findByIdentificador(String identificador);
 	
 }

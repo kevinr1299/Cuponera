@@ -77,7 +77,7 @@ public class EmpleadoController {
 				model.addAttribute("empleado", empleado);
 				return "Empleado/Nuevo";
 			}else {
-				String clave = PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS + PasswordGenerator.MAYUSCULAS + PasswordGenerator.ESPECIALES, 10);
+				String clave = PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS + PasswordGenerator.MAYUSCULAS, 10);
 				Usuario user = crearUsuario(empleado.getCorreo(), clave);
 				if(usuarioRepository.save(user) != null) {
 					emailService.sendSimpleMessage(empleado.getCorreo(), "Ingreso a la cuponera", "La cuponera le da la bienvenida, las credenciales con las que podra ingresar por primera vez son: " + clave);

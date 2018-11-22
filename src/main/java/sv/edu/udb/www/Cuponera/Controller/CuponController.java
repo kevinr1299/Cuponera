@@ -2,6 +2,8 @@ package sv.edu.udb.www.Cuponera.Controller;
 
 import java.util.Date;
 
+import javax.mail.MessagingException;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -93,8 +95,10 @@ public class CuponController {
 							cupon.setEstadoCupon(estadoCuponRepository.getOne(1));
 							cupon.setId(id);
 							cuponRepository.save(cupon);
-							email.sendSimpleMessage(cliente.getUsuario().getCorreo(), "Compra de cupon", "Felicidades por su compra, para poder canjear su cupon presentese en un local, este correo (digital o impreso) junto a su DUI, el encargado pedira su numero de DUI y numero de cupon para verificar el cambio, el numero de su cupon es: "+id);
+							email.sendSimpleMessage(cliente.getUsuario().getCorreo(), "Compra de cupon", "Felicidades por su compra, para poder canjear su cupon presentese en un local, este correo (digital o impreso) junto a su DUI, el encargado pedira su numero de DUI y numero de cupon para verificar el cambio, el numero de su cupon es: " + id + ", tiene hasta el: " + promocion.getFechaLimite() + " para canjear su cupon");
 							atributos.addFlashAttribute("exito", "Cupon comprado");
+							int disponibles = promocion.getCuponesDisponibles() - 1;
+							promocion.setCuponesDisponibles(disponibles);
 							return "redirect:/index";
 						}else {
 							atributos.addFlashAttribute("fallo","La oferta ya no esta disponible");
@@ -112,8 +116,10 @@ public class CuponController {
 				atributos.addFlashAttribute("fallo","No se encontro la oferta solicitada");
 				return "redirect:/index";
 			}
+		}catch(MessagingException ex) {
+			atributos.addFlashAttribute("fallo","Se compro el cupon; pero ocurrio un error enviando el correo");
+			return "redirect:/index";
 		}catch(Exception ex) {
-			System.out.println(ex);
 			atributos.addFlashAttribute("fallo","Ocurrio un error comprando el cupon");
 			return "redirect:/index";
 		}

@@ -4,7 +4,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="UTF-8">
-<title>Cambio de contraseña</title>
+<title>Canje de cupón</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/sweetAlert2.min.css}">
@@ -29,7 +29,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item"><a class="nav-link"
-							href="javascript: document.logoutForm.submit()">Cerrar sesion</a>
+					href="javascript: document.logoutForm.submit()">Cerrar sesion</a>
 					<form name="logoutForm" th:action="@{/logout}" method="post"
 						th:hidden="true">
 						<input hidden type="submit" value="Sign Out" />
@@ -42,48 +42,43 @@
 			<div class="col-xl-4 offset-xl-4 col-sm-12">
 				<div class="row">
 					<div
-						class="col-sm-12 mt-xl-3 bg-white p-1 rounded border border-primary">
+						class="col-sm-12 mt-xl-5 bg-white p-1 rounded border border-primary">
 						<center>
-							<img class="mx-auto" th:src="@{/img/lock.png}">
+							<img class="mx-auto" th:src="@{/img/canjear.png}">
 						</center>
-						<h3 class="text-center">Cambiar contraseña</h3>
-						<form th:action="@{/clave}" method="post"
-							th:object="${cambio}">
+						<h3 class="text-center">Canjear cupón</h3>
+						<form>
 							<p class="text-center">Campos requeridos (*)</p>
-							<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-								<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-							</ul>
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="form-group">
-										<label for="clave">Nueva contraseña:</label>
+										<label for="dui">DUI:</label>
 										<div class="input-group mb-2">
 											<div class="input-group-prepend">
 												<div class="input-group-text">*</div>
 											</div>
-											<input type="password" class="form-control" name="clave"
-												id="clave" th:field="*{clave}"
-												placeholder="•••••••••••••••••••">
+											<input type="text" class="form-control" name="dui" id="dui"
+												placeholder="Ingresa el DUI">
+											<p id="duiError" class="text-danger"></p>
 										</div>
 									</div>
 								</div>
 								<div class="col-sm-12">
 									<div class="form-group">
-										<label for="confirmacion">Confirmacion:</label>
+										<label for="cupon">Número de cupón:</label>
 										<div class="input-group mb-2">
 											<div class="input-group-prepend">
 												<div class="input-group-text">*</div>
 											</div>
-											<input type="password" class="form-control" name="confirmacion"
-												id="confirmacion" th:field="*{confirmacion}"
-												placeholder="•••••••••••••••••••">
+											<input type="text" class="form-control" name="cupon"
+												id="cupon" placeholder="Ingresa el cupón">
+											<p id="cuponError" class="text-danger"></p>
 										</div>
 									</div>
 								</div>
 							</div>
 							<center>
-								<input type="submit" value="Actualizar"
-									class="btn btn-outline-primary mx-auto">
+								<div class="btn btn-outline-primary mx-auto">Canjear</div>
 							</center>
 						</form>
 					</div>

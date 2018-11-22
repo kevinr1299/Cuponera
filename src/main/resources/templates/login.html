@@ -34,11 +34,6 @@
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="/registro">Registrarse</a></li>
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
-			</form>
 		</div>
 	</nav>
 	<div class="container">
@@ -55,8 +50,13 @@
 							<div th:if="${exito != null}" class="alert alert-success">
 								<strong th:text="${exito}" class="text-center"></strong>
 							</div>
+							<div th:if="${fallo != null}" class="alert alert-success">
+								<strong th:text="${fallo}" class="text-center"></strong>
+							</div>
 							<div th:if="${param.error}" class="alert alert-danger">
-								<strong class="text-center">Credenciales incorrectas y/o <br/> Usuario sin verificar</strong>
+								<strong class="text-center">Credenciales incorrectas
+									y/o <br /> Usuario sin verificar
+								</strong>
 							</div>
 							<div th:if="${param.logout}" class="alert alert-info">
 								<strong class="text-center">Se ha cerrado la sesión</strong>
@@ -75,8 +75,9 @@
 								<div>
 									<input class="btn btn-primary btn-lg btn-block" type="submit"
 										value="Iniciar sesión" />
-									<p id="pointer" class="text-primary text-center" data-toggle="modal"
-										data-target="#exampleModal">Olvidaste tu contraseña?</p>
+									<p id="pointer" class="text-primary text-center"
+										data-toggle="modal" data-target="#exampleModal">Olvidaste
+										tu contraseña?</p>
 								</div>
 							</form>
 						</div>
@@ -90,20 +91,39 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Recuperar contraseña</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Recuperar
+						contraseña</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">...</div>
+				<div class="modal-body">
+					<label for="username">Correo:</label> 
+					<input class="form-control"
+						id="correo" type="text" name="correo"
+						placeholder="example@example.com" />
+					<p id="error" class="text-danger"></p>
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Cancelar</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+					<div id="Recuperar" class="btn btn-primary">Recuperar</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
+<script>
+	$(document).ready(function(){
+		$('#Recuperar').click(function(){
+			var correo = $('#correo').val();
+			if(correo.trim() != ''){
+				location.href = "/recuperar/"+correo;	
+			}else{
+				$('#error').text("El correo es necesario");
+			}
+		})
+	})
+</script>
 </html>

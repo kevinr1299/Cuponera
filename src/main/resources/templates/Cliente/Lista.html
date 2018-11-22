@@ -4,7 +4,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="UTF-8">
-<title>Rubro nuevo</title>
+<title>Lista de clientes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/sweetAlert2.min.css}">
@@ -32,11 +32,11 @@
 					<ul class="list-group list-group-flush col-sm-12 p-0 m-0">
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="/oferta/admin">Ofertas</a></li>
-						<li class="list-group-item"><a class="nav-link text-dark"
-							href="/empresa">Empresas</a></li>
-						<li class="list-group-item active"><a
-							class="nav-link text-white" href="/rubro">Rubros</a></li>
-						<li class="list-group-item"><a class="nav-link text-dark"
+						<li class="list-group-item"><a
+							class="nav-link text-dark" href="/empresa">Empresas</a></li>
+						<li class="list-group-item "><a class="nav-link text-dark"
+							href="/rubro">Rubros</a></li>
+						<li class="list-group-item active"><a class="nav-link text-white"
 							href="/cliente">Clientes</a></li>
 						<li class="list-group-item"><a class="nav-link text-dark"
 							href="javascript: document.logoutForm.submit()" role="menuitem">Cerrar
@@ -51,49 +51,41 @@
 			<div class="col-md-10 offset-md-2 col-sm-12">
 				<div class="row">
 					<div class="col-sm-12 bg-dark p-2">
-						<h1 class="text-white">Rubros</h1>
+						<h1 class="text-white">Clientes</h1>
 						<ol class="breadcrumb bg-dark p-0 ">
 							<li class="breadcrumb-item text-white">Administrador</li>
 							<li class="breadcrumb-item"><a class="text-white"
-								href="/rubro">Rubros</a></li>
-							<li class="breadcrumb-item"><a class="text-white"
-								href="/rubro/nuevo">Nuevo</a></li>
+								href="/cliente">Clientes</a></li>
 						</ol>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-12 p-5">
-						<div class="row">
-							<div class="col-sm-12 col-md-4 offset-md-4 bg-light rounded p-2">
-								<h3 class="text-center">Nuevo rubro</h3>
-								<form th:action="@{/rubro/nuevo}" method="post"
-									th:object="${rubro}">
-									<p class="text-center">Campos requeridos (*)</p>
-									<ul th:if="${#fields.hasErrors('*')}"
-										class="alert alert-danger">
-										<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-									</ul>
-									<div class="col-sm-12">
-										<div class="form-group">
-											<label for="nombre">Nombre:</label>
-											<div class="input-group mb-2">
-												<div class="input-group-prepend">
-													<div class="input-group-text">*</div>
-												</div>
-												<input type="text" class="form-control" name="nombre"
-													id="nombre" th:field="*{descripcion}"
-													placeholder="Ingresa el nombre">
-											</div>
-										</div>
-										<center>
-											<input type="submit" value="Ingresar"
-												class="btn btn-outline-primary mr-1"> <a
-												href="/rubro" class="btn btn-danger">Cancelar</a>
-										</center>
-								</form>
-							</div>
-						</div>
+						<table class="table text-center bg-white rounded">
+							<thead class="thead-dark">
+								<tr class="bg-dark text-white">
+									<td>Nombre</td>
+									<td>Apellido</td>
+									<td>DUI</td>
+									<td>Correo</td>
+									<td>Cupones sin canjear</td>
+									<td>Cupones canjeados</td>
+									<td>Cupones vencidos</td>
+								</tr>
+							</thead>
+							<tbody th:each="cliente :${lista}">
+								<tr>
+									<td th:text="${cliente.nombre}"></td>
+									<td th:text="${cliente.apellido}"></td>
+									<td th:text="${cliente.dui}"></td>
+									<td th:text="${cliente.usuario.correo}"></td>
+									<td th:text="${cliente.canjeados}"></td>
+									<td th:text="${cliente.sinCanjear}"></td>
+									<td th:text="${cliente.vencidos}"></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

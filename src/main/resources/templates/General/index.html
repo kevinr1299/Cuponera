@@ -40,6 +40,7 @@
 					role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false" th:text="${cliente.nombre}"> </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" th:href="@{/cliente/cupones}">Cupones</a>
 						<a class="dropdown-item" th:href="@{/cliente/actualizar}">Actualizar
 							datos</a> <a class="dropdown-item" th:href="@{/cliente/clave}">Cambiar
 							contraseña</a>
@@ -52,11 +53,6 @@
 						<input hidden type="submit" value="Sign Out" />
 					</form></li>
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
-			</form>
 		</div>
 	</nav>
 	<div class="container-fluid">
@@ -79,21 +75,24 @@
 										th:text="${promocion.cuponesDisponibles}"></span>
 								</h5>
 								<p class="text-center">
-									<span>Empresa: </span><strong th:text="${promocion.empresa.nombre}"></strong><br>
-									$<span style="text-decoration: line-through;"
+									<span>Empresa: </span><strong
+										th:text="${promocion.empresa.nombre}"></strong><br> $<span
+										style="text-decoration: line-through;"
 										th:text="${promocion.precioRegular}"></span>|$<span
 										class="text-success" th:text="${promocion.precioOferta}"></</span>
 								</p>
 								<button th:if="${cliente != null}"
 									class="btn btn-danger btn-block"
-									th:onclick="'comprar(\'' + ${promocion.id} + '\');'">Comprar <img
-									th:src="@{/img/voucher.png}"></button>
+									th:onclick="'comprar(\'' + ${promocion.id} + '\');'">
+									Comprar <img th:src="@{/img/voucher.png}">
+								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<input type="hidden" id="idCliente" th:if="${cliente != null}" th:value="${cliente.id}">
 		<div class="fixed-bottom">
 			<div th:if="${exito != null}"
 				class="alert alert-success col-md-4 float-right alert-dismissible fade show"
@@ -117,7 +116,26 @@
 	</div>
 </body>
 <script>
-	async function comprar(id){
+	function comprar(id){
+		var cliente = $('#idCliente').val();
+		$.ajax({
+			url: "/api/cupon/pin/" + cliente,
+			success: function(result){
+				console.log(result)
+				if(result != ""){
+					link(id);
+				}else{
+					swal(
+						'Error?',
+						'Necesita ingresar la informacion de tarjeta y pin',
+						'error'
+					)
+				}
+			}
+		})
+	}
+	
+	async function link(id){
 		const {value: password} = await swal({
 			  title: 'Ingresa tu pin:',
 			  input: 'password',
@@ -127,11 +145,11 @@
 			    autocapitalize: 'off',
 			    autocorrect: 'off'
 			  }
-			})
+		})
 
-			if (password) {
-			  location.href = "/cupon/"+ password+"/"+id+"/comprar";
-			}
+		if (password) {
+			location.href = "/cupon/"+ password+"/"+id+"/comprar";
+		}
 	}
 </script>
 </html>

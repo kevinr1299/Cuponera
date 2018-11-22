@@ -17,8 +17,6 @@ public class PasswordGenerator {
 
     public static String MINUSCULAS = "abcdefghijklmnopqrstuvwxyz";
 
-    public static String ESPECIALES = "ñÑ";
-
     //
     public static String getPinNumber() {
         return getPassword(NUMEROS, 4);
