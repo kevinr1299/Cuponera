@@ -59,8 +59,8 @@
 											</div>
 											<input type="text" class="form-control" name="dui" id="dui"
 												placeholder="Ingresa el DUI">
-											<p id="duiError" class="text-danger"></p>
 										</div>
+										<p id="duiError" class="text-danger"></p>
 									</div>
 								</div>
 								<div class="col-sm-12">
@@ -72,13 +72,13 @@
 											</div>
 											<input type="text" class="form-control" name="cupon"
 												id="cupon" placeholder="Ingresa el cupón">
-											<p id="cuponError" class="text-danger"></p>
 										</div>
+										<p id="cuponError" class="text-danger"></p>
 									</div>
 								</div>
 							</div>
 							<center>
-								<div class="btn btn-outline-primary mx-auto">Canjear</div>
+								<div id="canjear" class="btn btn-outline-primary mx-auto">Canjear</div>
 							</center>
 						</form>
 					</div>
@@ -87,4 +87,67 @@
 		</div>
 	</div>
 </body>
+<script>
+	$(document).ready(function(){
+		$('#canjear').click(function(){
+			var cupon = $('#cupon').val();
+			var dui = $('#dui').val();
+			if(cupon.trim() != "" && dui.trim() != ""){
+				$('#cuponError').text("");
+				$('#duiError').text("");
+				var canjear = new Object();
+				canjear.cupon = cupon;
+				canjear.dui = dui;	
+				$.ajax({
+					url: "http://localhost:8080/api/cupon/canjear",
+					type: "POST",
+					data: JSON.stringify(canjear),
+					dataType: 'json',
+					contentType: 'application/json',
+					success: function(result){
+						if(result.status == 200){
+							swal(
+								'Canjeado',
+								result.responseText,
+								'success'
+							);
+							$('#cupon').val("");
+							$('#dui').val("");
+						}else{
+							swal(
+								'Error',
+								result.responseText,
+								'error'
+							)	
+						}
+					},
+					error: function(result){
+						if(result.status == 200){
+							swal(
+								'Canjeado',
+								result.responseText,
+								'success'
+							);
+							$('#cupon').val("");
+							$('#dui').val("");
+						}else{
+							swal(
+								'Error',
+								result.responseText,
+								'error'
+							)	
+						}
+					}
+				});
+			}else{
+				if(cupon.trim() == ""){
+					$('#cuponError').text("El cupón es necesario");
+				}
+				if(dui.trim() == ""){
+					$('#duiError').text("El DUI es necesario");
+				}
+			}
+		})
+	})
+</script>
 </html>

@@ -98,7 +98,7 @@
 									<td>Titulo</td>
 									<td>Precio oferta ($)</td>
 									<td>Fecha de compra</td>
-									<td>Fecha limite de uso</td>
+									<td>Fecha de canje</td>
 								</tr>
 							</thead>
 							<tbody th:each="cupon : ${cliente.cupons}">
@@ -108,7 +108,7 @@
 									<td th:text="${cupon.promocion.titulo}"></td>
 									<td th:text="${cupon.promocion.precioOferta}"></td>
 									<td th:text="${cupon.fechaCompra}"></td>
-									<td th:text="${cupon.promocion.fechaLimite}">
+									<td th:text="${cupon.fechaCanje}">
 								</tr>
 							</tbody>
 						</table>
